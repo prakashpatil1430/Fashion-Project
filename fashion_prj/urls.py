@@ -17,8 +17,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from fashion_prj import views
+from django.conf.urls import static
+from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.display),
 ]
+
+# Check if DEBUG is True to serve static files during development
+if settings.DEBUG:
+    # Add the URL pattern for serving media files
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+
+    # Add the URL pattern for serving static files(CSS,JavaScript,images, etc.)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
